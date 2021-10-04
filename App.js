@@ -6,31 +6,49 @@ import {
   View,
   Platform,
   Progress,
-  Button
-
+  Button,
 } from 'react-native';
+import ToolbarAndroid from '@react-native-community/toolbar-android';
 
-import { ProgressView } from "@react-native-community/progress-view";
 
 
 const App = () => {
 
-  const [teste, setTeste] = useState(0.0)
+  const icon = { uri: 'https://toppng.com/uploads/preview/menu-icon-png-3-lines-11552739310fjzs2n2wxt.png' }
+
+  function handleAction(position) {
+    console.log(position)
+    console.log('teste')
+  }
 
   return (
     <SafeAreaView>
       <View>
-        <ProgressView
-          progressTintColor="orange"
-          trackTintColor="blue"
-          progress={teste}
-        />
-        <Button
-          title='teste'
-          onPress={() => {
-            setTeste(teste + 0.1)
+        <ToolbarAndroid
+          title="Meu App"
+          titleColor='white'
+          subtitle="Desc. App"
+          subtitleColor='red'
+          // navIcon={icon} icone lado esquerdo
+          actions={[ //ações que seram feitas ao clicar nelas
+            {
+              title: 'Configurações',
+              icon: icon,
+            },
+            {
+              title: 'Opções',
+              show: 'always', //mostra botão na tela, se não tiver o always todas actions ficam em um menu modal
+              icon: icon, //icone da action
+            },
+          ]}
+          style={{
+            backgroundColor: '#8196F3',
+            height: 56
           }}
+          onActionSelected={handleAction} //função disparada ao selecionar action
+          onIConClicked={handleAction} //funcção disparada ao sleecionar menu principal 
         />
+        <Text>teste</Text>
       </View>
     </SafeAreaView>
   );
