@@ -1,47 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
   Text,
   View,
   Platform,
-  Progress
+  Progress,
+  Button
 
 } from 'react-native';
 
-import { ProgressBar } from '@react-native-community/progress-bar-android';
+import { ProgressView } from "@react-native-community/progress-view";
 
 
 const App = () => {
 
-  useEffect(() => {
-
-  }, [])
+  const [teste, setTeste] = useState(0.0)
 
   return (
     <SafeAreaView>
       <View>
-        <View style={styles.example}>
-          <Text>Circle Progress Indicator</Text>
-          <ProgressBar />
-        </View>
-        <View style={styles.example}>
-          <Text>Horizontal Progress Indicator</Text>
-          <ProgressBar styleAttr="Horizontal" />
-        </View>
-        <View style={styles.example}>
-          <Text>Colored Progress Indicator</Text>
-          <ProgressBar styleAttr="Horizontal" color="#2196F3" />
-        </View>
-        <View style={styles.example}>
-          <Text>Fixed Progress Value</Text>
-          <ProgressBar
-            styleAttr="Horizontal"
-            indeterminate={false}
-            progress={0.5}
-          />
-        </View>
-        <Text>Teste</Text>
+        <ProgressView
+          progressTintColor="orange"
+          trackTintColor="blue"
+          progress={teste}
+        />
+        <Button
+          title='teste'
+          onPress={() => {
+            setTeste(teste + 0.1)
+          }}
+        />
       </View>
     </SafeAreaView>
   );
