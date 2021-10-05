@@ -4,44 +4,36 @@ import {
   StyleSheet,
   Text,
   View,
-  Platform,
-  Progress,
-  Button,
+  ScrollView,
+  RefreshControl
 } from 'react-native';
-import ToolbarAndroid from '@react-native-community/toolbar-android';
-
-
+import { ListsService } from './app/services/ListsService'
+import ListsView from './app/views/ListsView';
 
 const App = () => {
 
-  const icon = { uri: 'https://toppng.com/uploads/preview/menu-icon-png-3-lines-11552739310fjzs2n2wxt.png' }
+  const [lists, setLists] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
-  function handleAction(position) {
-    console.log(position)
-    console.log('teste')
+  async function getLists() {
+    setIsLoading(true)
+    const listsFromBD = await ListsService.list()
+    setIsLoading(false)
+    console.log('listsFromBD', listsFromBD)
+    return listsFromBD
   }
+
+  useEffect(() => {
+    setLists(getLists());
+  }, [])
 
   return (
     <SafeAreaView>
       <View>
-        <ToolbarAndroid
-          title="Meu App"
-          subtitle="Desc. App"
-          actions={[
-            {
-              title: 'Configurações',
-            },
-            {
-              title: 'Opções',
-            },
-          ]}
-          style={{
-            backgroundColor: '#8196F3',
-            height: 56
-          }}
-          onActionSelected={handleAction}
-          onIConClicked={handleAction}
-        />
+        <ScrollView refreshControl={<RefreshControl refreshing={isLoading} onRefresh={getLists()} />}>
+          <ListsView lists={lists} />
+          <Text>teste</Text>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -52,9 +44,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  example: {
-    marginVertical: 24,
+    backgroundColor: '#F5FCFF'
   },
 });
 
