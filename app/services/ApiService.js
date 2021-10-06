@@ -1,4 +1,4 @@
-const url = 'http://172.19.80.1:3002/api/react-native/'
+const url = 'http://192.168.1.5:3002/api/react-native/'
 
 export const ApiService = {
     get(endpoint) {

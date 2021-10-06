@@ -3,7 +3,6 @@ import {
     View,
     FlatList,
     Text
-
 } from 'react-native';
 import SimpleList from '../Components/SimpleList';
 
@@ -15,7 +14,7 @@ export default function ListsView(props) {
     useEffect(() => {
         setLists(props.lists)
         console.log('lista from listView', lists)
-    }, [props.lists])
+    }, [props])
 
 
     return (

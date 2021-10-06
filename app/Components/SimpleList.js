@@ -14,12 +14,13 @@ export default function SimpleList(props) {
     useEffect(() => {
         setList(props.list)
         console.log('lista from simpleList', list)
-    }, [props.list])
+    }, [props])
 
     return (
         <View style={{ width: (window.width / 3 - 8), margin: 2, marginBottom: 30, borderWidth: 1, borderColor: '#aaa', padding: 5 }}>
             <Image source={{ uri: list.Picture || imageDefault }} style={{ height: window.width / 3 }} />
-            <Text style={{ fontWeight: 'bold' }}>{list.Title}</Text>
+            <Text style={{ fontWeight: 'bold' }}>{list.Title || 'Erro'}</Text>
         </View>
     );
 }
+
