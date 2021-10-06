@@ -3,7 +3,8 @@ const url = 'http://172.19.80.1:3002/api/react-native/'
 export const ApiService = {
     get(endpoint) {
         return fetch(`${url}${endpoint}`)
-            .then(res => res.json());
+            .then(res => res.json())
+
     },
 
     post(endpoint, data) {

@@ -19,20 +19,23 @@ const App = () => {
     setIsLoading(true)
     const listsFromBD = await ListsService.list()
     setIsLoading(false)
-    console.log('listsFromBD', listsFromBD)
-    return listsFromBD
+    setLists(listsFromBD)
   }
 
   useEffect(() => {
-    setLists(getLists());
-  }, [])
+    console.log('lista from app', lists)
+  }, [lists])
+
+  // useEffect(() => {
+  //   getLists()
+  // }, [])
+
 
   return (
     <SafeAreaView>
       <View>
-        <ScrollView refreshControl={<RefreshControl refreshing={isLoading} onRefresh={getLists()} />}>
+        <ScrollView refreshControl={<RefreshControl refreshing={isLoading} onRefresh={getLists} />}>
           <ListsView lists={lists} />
-          <Text>teste</Text>
         </ScrollView>
       </View>
     </SafeAreaView>

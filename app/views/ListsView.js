@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     View,
     FlatList,
@@ -11,6 +11,13 @@ export default function ListsView(props) {
 
     const [lists, setLists] = useState([]);
 
+
+    useEffect(() => {
+        setLists(props.lists)
+        console.log('lista from listView', lists)
+    }, [props.lists])
+
+
     return (
         <View style={{ flex: 1 }}>
             <FlatList
@@ -18,7 +25,7 @@ export default function ListsView(props) {
                 renderItem={({ item }) => <SimpleList list={item} />}
                 numColumns={3}
                 keyExtractor={(item) => item.id}
-                ListEmptyComponent={<Text>Lista vázia</Text>}
+                ListEmptyComponent={<Text>Lista vazia :/</Text>}
             />
         </View>
     );
