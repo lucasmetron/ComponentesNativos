@@ -6,10 +6,14 @@ import {
   View,
   ScrollView,
   RefreshControl,
-  TextInput
+  TextInput,
 } from 'react-native';
-import { ListsService } from './app/services/ListsService'
+import { ListsService } from './app/services/ListsService';
 import ListsView from './app/views/ListsView';
+
+
+import { Picker } from '@react-native-picker/picker';
+
 
 const App = () => {
 
@@ -31,7 +35,7 @@ const App = () => {
   //   getLists()
   // }, [])
 
-  const [nome, setNome] = useState('');
+  const [item, setItem] = useState('')
 
   return (
     <SafeAreaView>
@@ -39,17 +43,18 @@ const App = () => {
         <ScrollView refreshControl={<RefreshControl refreshing={isLoading} onRefresh={getLists} />}>
           <ListsView lists={lists} />
         </ScrollView>
-        <TextInput
-          keyboardType='phone-pad' //tipo do teclado
-          maxLength={20} //maximo de caracteres
-          editable={true} //se o input esta ou nao habilitado
-          multiline={true} // permite o input aumentar de tamanho
-          numberOfLines={4} //numero de linhas
-          style={{ height: 40, margin: 10, borderColor: 'gray', borderWidth: 1 }}
-          value={nome}
-          onChangeText={text => setNome(text)}
-        />
-        <Text>{nome} - {nome.length}</Text>
+
+        <Picker
+          style={{ height: 50, width: 150 }}
+          selectedValue={item}
+          onValueChange={(item, index) => setItem(item)}
+        >
+          <Picker.Item label='JavaScrip' value='JS' />
+          <Picker.Item label='Python' value='PY' />
+          <Picker.Item label='Ruby' value='RB' />
+        </Picker>
+
+        <Text>{item}</Text>
       </View>
     </SafeAreaView>
   );
