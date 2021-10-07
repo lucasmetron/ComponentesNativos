@@ -21,7 +21,7 @@ export default function ListsView(props) {
         <View style={{ flex: 1 }}>
             <FlatList
                 data={lists}
-                renderItem={({ item }) => <SimpleList list={item} />}
+                renderItem={({ item }) => <SimpleList list={item} onRemove={props.onRemove} />}
                 numColumns={3}
                 keyExtractor={(item) => item.id}
                 ListEmptyComponent={<Text>Lista vazia :/</Text>}
