@@ -11,8 +11,9 @@ import {
 import { ListsService } from './app/services/ListsService';
 import ListsView from './app/views/ListsView';
 
+import Slider from '@react-native-community/slider';
 
-import { Picker } from '@react-native-picker/picker';
+
 
 
 const App = () => {
@@ -35,7 +36,7 @@ const App = () => {
   //   getLists()
   // }, [])
 
-  const [item, setItem] = useState('')
+  const [value, setValue] = useState(10)
 
   return (
     <SafeAreaView>
@@ -44,17 +45,15 @@ const App = () => {
           <ListsView lists={lists} />
         </ScrollView>
 
-        <Picker
-          style={{ height: 50, width: 150 }}
-          selectedValue={item}
-          onValueChange={(item, index) => setItem(item)}
-        >
-          <Picker.Item label='JavaScrip' value='JS' />
-          <Picker.Item label='Python' value='PY' />
-          <Picker.Item label='Ruby' value='RB' />
-        </Picker>
+        <Slider
+          minimumValue={5}
+          maximumValue={20}
+          step={5}
+          value={value}
+          onValueChange={value => setValue(value)}
+        />
 
-        <Text>{item}</Text>
+        <Text>{value}</Text>
       </View>
     </SafeAreaView>
   );
