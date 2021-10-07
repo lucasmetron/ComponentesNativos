@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { ListsService } from './app/services/ListsService';
 import ListsView from './app/views/ListsView';
-
+import List from './app/Components/List';
 
 const App = () => {
 
@@ -41,9 +41,10 @@ const App = () => {
   return (
     <SafeAreaView>
       <View>
-        <ScrollView refreshControl={<RefreshControl refreshing={isLoading} onRefresh={getLists} />}>
+        {/* <ScrollView refreshControl={<RefreshControl refreshing={isLoading} onRefresh={getLists} />}>
           <ListsView lists={lists} onRemove={removeList} />
-        </ScrollView>
+        </ScrollView> */}
+        <List />
       </View>
     </SafeAreaView>
   );
