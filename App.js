@@ -7,13 +7,13 @@ import {
   ScrollView,
   RefreshControl,
   TextInput,
+  TouchableHighlight,
+  TouchableOpacity,
+  TouchableNativeFeedback,
+  TouchableWithoutFeedback
 } from 'react-native';
 import { ListsService } from './app/services/ListsService';
 import ListsView from './app/views/ListsView';
-
-import Slider from '@react-native-community/slider';
-
-
 
 
 const App = () => {
@@ -32,11 +32,17 @@ const App = () => {
     console.log('lista from app', lists)
   }, [lists])
 
-  // useEffect(() => {
-  //   getLists()
-  // }, [])
+  useEffect(() => {
+    getLists()
+  }, [])
 
-  const [value, setValue] = useState(10)
+  const [value, setValue] = useState(false)
+
+  useEffect(() => {
+    console.log(value)
+  }, [value])
+
+
 
   return (
     <SafeAreaView>
@@ -45,15 +51,24 @@ const App = () => {
           <ListsView lists={lists} />
         </ScrollView>
 
-        <Slider
-          minimumValue={5}
-          maximumValue={20}
-          step={5}
-          value={value}
-          onValueChange={value => setValue(value)}
-        />
+        <TouchableHighlight onPress={() => console.log('teste')} underlayColor='green'> {/*Fundo do botão altera de cor*/}
+          <Text style={styles.button}>TouchableHighlight</Text>
+        </TouchableHighlight>
 
-        <Text>{value}</Text>
+        <TouchableOpacity> {/* Mais indicado para android e ios*/}
+          <Text style={styles.button}>TouchableOpacity</Text>
+        </TouchableOpacity>
+
+        <TouchableNativeFeedback>  {/*precisa estar dentro de uma view e funciona no android */}
+          <View>
+            <Text style={styles.button}>TouchableNativeFeedback</Text>
+          </View>
+        </TouchableNativeFeedback>
+
+        <TouchableWithoutFeedback> {/*é pressionavel mas nao retorna feedback que foi pressionado*/}
+          <Text style={styles.button}>TouchableWithoutFeedback</Text>
+        </TouchableWithoutFeedback>
+
       </View>
     </SafeAreaView>
   );
@@ -66,6 +81,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF'
   },
+  button: {
+    backgroundColor: 'red',
+    color: 'white',
+    width: 300,
+    height: 60,
+    marginBottom: 5,
+    textAlign: 'center'
+  }
 });
 
 export default App;
