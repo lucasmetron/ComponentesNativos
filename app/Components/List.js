@@ -2,18 +2,61 @@ import React, { useEffect, useState } from "react";
 import {
     TextInput,
     View,
-    Text
+    Text,
+    Image,
+    TouchableHighlight,
+    TouchableOpacity,
+    Button,
+    FlatList,
+
 } from "react-native";
+import Clipboard from '@react-native-community/clipboard';
+import ListItem from "./ListItem";
 
 export default function List(props) {
 
-    const [list, setList] = useState([{ id: 123, title: 'lais' }])
+    const imageDefault = 'https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg'
+    const [list, setList] = useState({ items: [] })
+    const [newItemDescription, setNewItemDescription] = useState("")
 
     function updateList(field, value) {
-        const item = Object.assign({}, list, { [field]: value })
-        const newlist = () => { return { ...list, item } }
-        // setList(list, list.title = newList)
-        console.log(item)
+        const newList = Object.assign({}, list, { [field]: value })
+        setList(newList)
+    }
+
+    function updateListItem(item) {
+        const itemIndex = list.items.findIndex(listItem => listItem.id === item.id)
+        const newListItems = [...list.items];
+        if (itemIndex >= 0) {
+            newListItems[itemIndex] = item;
+        } else {
+            newListItems.push(item);
+        }
+        updateList('items', newListItems);
+    }
+
+    function removeListItem(item) {
+        const itemIndex = list.items.findIndex(listItem => listItem.id === item.id)
+        const newListItems = [...list.items];
+        newListItems.splice(itemIndex, 1);
+        updateList('items', newListItems);
+    }
+
+    async function pasteImage() {
+        const picture = await Clipboard.getString()
+        const types = ['.png', '.jpeg', '.jpg']
+        if (picture.startsWith('http') & types.some(type => picture.endsWith(type))) {
+            updateList('picture', picture)
+        }
+    }
+
+    function createListItem() {
+        const description = newItemDescription
+        if (description) {
+            const newItem = { description: description, done: false, id: Date.now().toString() }
+            updateListItem(newItem);
+            setNewItemDescription('');
+        }
     }
 
     useEffect(() => {
@@ -22,6 +65,14 @@ export default function List(props) {
         }
 
     }, [props])
+
+    useEffect(() => {
+        console.log(list)
+    }, [list])
+
+    useEffect(() => {
+        console.log(newItemDescription)
+    })
 
     return (
         <View style={{ flex: 1 }}>
@@ -33,8 +84,39 @@ export default function List(props) {
                     onChangeText={text => updateList('title', text)}
                     value={list.title}
                 />
+                <View style={{ flex: 1, flexDirection: "row", padding: 5 }}>
+                    <TouchableHighlight onPress={() => pasteImage()}>
+                        <Image
+                            source={{ uri: list.picture || imageDefault }}
+                            style={{ width: 100, height: 100, marginRight: 10 }}
+                        />
+                    </TouchableHighlight>
 
-                <Text>{list.title}</Text>
+                    <TextInput
+                        style={{ borderColor: 'gray', borderWidth: 1, padding: 5 }}
+                        placeholder='Descrição'
+                        onChangeText={(text) => updateList('description', text)}
+                        value={list.description}
+                        numberOfLines={3}
+                        multiline={true}
+                    />
+                </View>
+                <View style={{ flex: 1, flexDirection: 'row', height: 40 }}>
+                    <TextInput
+                        style={{ height: 40, flex: 1, borderColor: 'gray', borderWidth: 1 }}
+                        placeholder='Novo Item'
+                        value={newItemDescription}
+                        onChangeText={(text) => setNewItemDescription(text)}
+                    />
+                    <TouchableOpacity onPress={createListItem} style={{ position: 'absolute', bottom: 0, backgroundColor: 'green' }} ><Text>Adicionar</Text></TouchableOpacity>
+                    {/* <Button title='+' onPress={() => createListItem()} color='green' /> */}
+                </View>
+                <FlatList
+                    style={{ flex: 1, position: 'absolute', top: 0 }}
+                    data={list.items}
+                    keyExtractor={item => item.id}
+                    renderItem={({ item }) => <ListItem item={item} onUpdate={updateListItem} onRemove={removeListItem} />}
+                />
             </View>
 
         </View>
