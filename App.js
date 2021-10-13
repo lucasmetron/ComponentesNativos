@@ -30,7 +30,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    console.log('lista from app', lists)
+    // console.log('lista from app', lists)
   }, [lists])
 
   useEffect(() => {
@@ -38,15 +38,32 @@ const App = () => {
   }, [])
 
 
+  const [counter, setCounter] = useState(0)
+
+  function handleCounter() {
+    setCounter(counter + 1)
+  }
+
   return (
     <SafeAreaView>
-      <View>
+      <View
+        onStartShouldSetResponder={() => true} // se tiver como true responde quando o usuário tocar na superficie.
+        onMoveShouldSetResponder={() => false} // se tiver como true responde quando o usuário desliza o dedo sobre a view.
+        onResponderGrant={() => handleCounter()} //executa função quando toca na view. Para funcionar os métodos acima precisam estar true.
+        onResponderRelease={() => handleCounter()} //executa função quando ao tirar o dedo da view. Para funcionar os métodos acima precisam estar true.
+        onResponderMove={() => handleCounter()} //executa função quando pressiono o dedo na tela e vou mexendo o dedo com o dedo pressionado.
+      >
         {/* <ScrollView refreshControl={<RefreshControl refreshing={isLoading} onRefresh={getLists} />}>
-          <ListsView lists={lists} onRemove={removeList} />
-        </ScrollView> */}
-        <List />
+        <ListsView lists={lists} onRemove={removeList} />
+      </ScrollView> */}
+        {/* <List /> */}
+
+        <Text >Lucas Rosa</Text>
+        <Text>Counter: {counter}</Text>
+
       </View>
     </SafeAreaView>
+
   );
 };
 

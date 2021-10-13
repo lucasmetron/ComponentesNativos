@@ -84,7 +84,7 @@ export default function List(props) {
                     onChangeText={text => updateList('title', text)}
                     value={list.title}
                 />
-                <View style={{ flex: 1, flexDirection: "row", padding: 5 }}>
+                <View style={{ flex: 1, flexDirection: 'row', padding: 5 }}>
                     <TouchableHighlight onPress={() => pasteImage()}>
                         <Image
                             source={{ uri: list.picture || imageDefault }}
@@ -108,11 +108,11 @@ export default function List(props) {
                         value={newItemDescription}
                         onChangeText={(text) => setNewItemDescription(text)}
                     />
-                    <TouchableOpacity onPress={createListItem} style={{ position: 'absolute', bottom: 0, backgroundColor: 'green' }} ><Text>Adicionar</Text></TouchableOpacity>
-                    {/* <Button title='+' onPress={() => createListItem()} color='green' /> */}
+                    {/* <TouchableOpacity onPress={createListItem} style={{ position: 'absolute', bottom: 0, backgroundColor: 'green' }} ><Text>Adicionar</Text></TouchableOpacity> */}
+                    <Button title='+' onPress={() => createListItem()} color='green' />
                 </View>
                 <FlatList
-                    style={{ flex: 1, position: 'absolute', top: 0 }}
+                    style={{ flex: 1 }}
                     data={list.items}
                     keyExtractor={item => item.id}
                     renderItem={({ item }) => <ListItem item={item} onUpdate={updateListItem} onRemove={removeListItem} />}
