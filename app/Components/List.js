@@ -8,6 +8,8 @@ import {
     TouchableOpacity,
     Button,
     FlatList,
+    SafeAreaView,
+    ScrollView
 
 } from "react-native";
 import Clipboard from '@react-native-community/clipboard';
@@ -75,9 +77,9 @@ export default function List(props) {
     })
 
     return (
-        <View style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1 }}>
 
-            <View style={{ flex: 1 }}>
+            <ScrollView style={{ flex: 1 }}>
                 <TextInput
                     style={{ height: 40, borderColor: 'gray', borderWidth: 1, fontSize: 20, fontWeight: 'bold' }}
                     placeholder='Título'
@@ -117,8 +119,8 @@ export default function List(props) {
                     keyExtractor={item => item.id}
                     renderItem={({ item }) => <ListItem item={item} onUpdate={updateListItem} onRemove={removeListItem} />}
                 />
-            </View>
+            </ScrollView>
 
-        </View>
+        </SafeAreaView>
     );
 }

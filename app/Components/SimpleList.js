@@ -18,13 +18,15 @@ export default function SimpleList(props) {
     }, [props])
 
     return (
-        <View style={{ position: 'relative', width: (window.width / 3 - 8), margin: 2, marginBottom: 30, borderWidth: 1, borderColor: '#aaa', padding: 5, borderRadius: 5 }}>
-            <TouchableHighlight onPress={() => { props.onRemove(props.list) }} style={{ position: 'absolute', right: 0, top: 0, zIndex: 2 }}>
-                <Text style={{ backgroundColor: 'red', color: 'white', padding: 5, borderRadius: 5 }}>X</Text>
-            </TouchableHighlight>
-            <Image source={{ uri: list.Picture || imageDefault }} style={{ height: window.width / 3 }} />
-            <Text style={{ fontWeight: 'bold' }}>{list.Title || 'Erro'}</Text>
-        </View>
+        <TouchableHighlight onPress={props.onSelect} style={{ width: (window.width / 3 - 8), margin: 2, marginBottom: 30, borderWidth: 1, borderColor: '#aaa', padding: 5, borderRadius: 5 }}>
+            <View style={{ position: 'relative' }}>
+                <TouchableHighlight onPress={() => { props.onRemove(props.list) }} style={{ position: 'absolute', right: 0, top: 0, zIndex: 2 }}>
+                    <Text style={{ backgroundColor: 'red', color: 'white', padding: 5, borderRadius: 5 }}>X</Text>
+                </TouchableHighlight>
+                <Image source={{ uri: list.Picture || imageDefault }} style={{ height: window.width / 3 }} />
+                <Text style={{ fontWeight: 'bold' }}>{list.Title || 'Erro'}</Text>
+            </View>
+        </TouchableHighlight>
     );
 }
 

@@ -19,12 +19,21 @@ const App = () => {
 
   const [lists, setLists] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
 
   async function getLists() {
     setIsLoading(true)
     const listsFromBD = await ListsService.list()
     setIsLoading(false)
     setLists(listsFromBD)
+  }
+
+  function createList() {
+    //parei no minuto 07:30
+  }
+
+  function selectList() {
+    return ''
   }
 
   function removeList(listToRemove) {
@@ -47,15 +56,22 @@ const App = () => {
   return (
     <SafeAreaView>
       <View>
+        <Button title='Add Nova Lista' onPress={createList} style={{ flex: 1 }} color={'green'} />
         <ScrollView refreshControl={<RefreshControl refreshing={isLoading} onRefresh={getLists} />}>
-          <ListsView lists={lists} onRemove={removeList} />
+          <ListsView lists={lists} onRemove={removeList} onSelect={selectList} />
         </ScrollView>
-        <ScrollView>
+
+
+        <Modal
+          animationType='slide'
+          transparent={false}
+          visible={modalVisible}
+        >
           <List />
-        </ScrollView>
+        </Modal>
+
       </View>
     </SafeAreaView>
-
   );
 };
 
