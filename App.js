@@ -14,6 +14,7 @@ import { ListsService } from './app/services/ListsService';
 import ListsView from './app/views/ListsView';
 import List from './app/Components/List';
 
+
 const App = () => {
 
   const [lists, setLists] = useState([])
@@ -43,31 +44,15 @@ const App = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  function handleCounter() {
-    setCounter(counter + 1)
-  }
-
   return (
     <SafeAreaView>
       <View>
-        {/* <ScrollView refreshControl={<RefreshControl refreshing={isLoading} onRefresh={getLists} />}>
-        <ListsView lists={lists} onRemove={removeList} />
-      </ScrollView> */}
-        {/* <List /> */}
-        <Button title='Abrir' onPress={() => setIsModalOpen(true)} />
-
-        <Modal
-          visible={isModalOpen}// controla se a modal está aberta ou fechada
-          animationType='fade' // animação, tem fade, slide, none e etc
-          transparent={false}
-          onRequestClose={() => { }} //Quando a modal fecha executa essa função
-          onShow={() => { }} //Quando a modal aparece executa essa função
-        >
-          <View>
-            <Button title='Fechar' onPress={() => setIsModalOpen(false)} />
-          </View>
-        </Modal>
-
+        <ScrollView refreshControl={<RefreshControl refreshing={isLoading} onRefresh={getLists} />}>
+          <ListsView lists={lists} onRemove={removeList} />
+        </ScrollView>
+        <ScrollView>
+          <List />
+        </ScrollView>
       </View>
     </SafeAreaView>
 
