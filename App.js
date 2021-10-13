@@ -6,6 +6,7 @@ import {
   View,
   ScrollView,
   RefreshControl,
+  TextInput,
 } from 'react-native';
 import { ListsService } from './app/services/ListsService';
 import ListsView from './app/views/ListsView';
@@ -46,20 +47,29 @@ const App = () => {
 
   return (
     <SafeAreaView>
-      <View
-        onStartShouldSetResponder={() => true} // se tiver como true responde quando o usuário tocar na superficie.
-        onMoveShouldSetResponder={() => false} // se tiver como true responde quando o usuário desliza o dedo sobre a view.
-        onResponderGrant={() => handleCounter()} //executa função quando toca na view. Para funcionar os métodos acima precisam estar true.
-        onResponderRelease={() => handleCounter()} //executa função quando ao tirar o dedo da view. Para funcionar os métodos acima precisam estar true.
-        onResponderMove={() => handleCounter()} //executa função quando pressiono o dedo na tela e vou mexendo o dedo com o dedo pressionado.
-      >
+      <View>
         {/* <ScrollView refreshControl={<RefreshControl refreshing={isLoading} onRefresh={getLists} />}>
         <ListsView lists={lists} onRemove={removeList} />
       </ScrollView> */}
         {/* <List /> */}
+        <ScrollView>
 
-        <Text >Lucas Rosa</Text>
-        <Text>Counter: {counter}</Text>
+          <TextInput placeholder='A' style={styles.input} />
+          <TextInput placeholder='B' style={styles.input} />
+          <TextInput placeholder='C' style={styles.input} />
+          <TextInput placeholder='D' style={styles.input} />
+          <TextInput placeholder='E' style={styles.input} />
+          <TextInput placeholder='F' style={styles.input} />
+          <TextInput placeholder='G' style={styles.input} />
+          <TextInput placeholder='H' style={styles.input} />
+          <TextInput placeholder='I' style={styles.input} />
+          <TextInput placeholder='J' style={styles.input} />
+          <TextInput placeholder='K' style={styles.input} />
+          <TextInput placeholder='L' style={styles.input} />
+          <TextInput placeholder='M' style={styles.input} />
+          <TextInput placeholder='N' style={styles.input} />
+          <TextInput placeholder='O' style={styles.input} />
+        </ScrollView>
 
       </View>
     </SafeAreaView>
@@ -74,6 +84,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF'
   },
+
+  input: {
+    borderWidth: 1,
+    borderColor: 'gray',
+    width: 200,
+    height: 60,
+  }
 });
 
 export default App;
