@@ -7,6 +7,8 @@ import {
   ScrollView,
   RefreshControl,
   TextInput,
+  Modal,
+  Button,
 } from 'react-native';
 import { ListsService } from './app/services/ListsService';
 import ListsView from './app/views/ListsView';
@@ -39,7 +41,7 @@ const App = () => {
   }, [])
 
 
-  const [counter, setCounter] = useState(0)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   function handleCounter() {
     setCounter(counter + 1)
@@ -52,24 +54,19 @@ const App = () => {
         <ListsView lists={lists} onRemove={removeList} />
       </ScrollView> */}
         {/* <List /> */}
-        <ScrollView>
+        <Button title='Abrir' onPress={() => setIsModalOpen(true)} />
 
-          <TextInput placeholder='A' style={styles.input} />
-          <TextInput placeholder='B' style={styles.input} />
-          <TextInput placeholder='C' style={styles.input} />
-          <TextInput placeholder='D' style={styles.input} />
-          <TextInput placeholder='E' style={styles.input} />
-          <TextInput placeholder='F' style={styles.input} />
-          <TextInput placeholder='G' style={styles.input} />
-          <TextInput placeholder='H' style={styles.input} />
-          <TextInput placeholder='I' style={styles.input} />
-          <TextInput placeholder='J' style={styles.input} />
-          <TextInput placeholder='K' style={styles.input} />
-          <TextInput placeholder='L' style={styles.input} />
-          <TextInput placeholder='M' style={styles.input} />
-          <TextInput placeholder='N' style={styles.input} />
-          <TextInput placeholder='O' style={styles.input} />
-        </ScrollView>
+        <Modal
+          visible={isModalOpen}// controla se a modal está aberta ou fechada
+          animationType='fade' // animação, tem fade, slide, none e etc
+          transparent={false}
+          onRequestClose={() => { }} //Quando a modal fecha executa essa função
+          onShow={() => { }} //Quando a modal aparece executa essa função
+        >
+          <View>
+            <Button title='Fechar' onPress={() => setIsModalOpen(false)} />
+          </View>
+        </Modal>
 
       </View>
     </SafeAreaView>
