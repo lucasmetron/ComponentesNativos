@@ -21,6 +21,28 @@ export default function List(props) {
     const [list, setList] = useState({ items: [] })
     const [newItemDescription, setNewItemDescription] = useState("")
 
+
+    useEffect(() => {
+        if (props.list) {
+            setList(props.list)
+        }
+
+    }, [props])
+
+    useEffect(() => {
+        console.log(list)
+    }, [list])
+
+    useEffect(() => {
+        console.log(newItemDescription)
+    })
+
+    function onActionDone(list) {
+        if (props.onActionDone) {
+            props.onActionDone(list)
+        }
+    }
+
     function updateList(field, value) {
         const newList = Object.assign({}, list, { [field]: value })
         setList(newList)
@@ -61,23 +83,11 @@ export default function List(props) {
         }
     }
 
-    useEffect(() => {
-        if (props.list) {
-            setList(props.list)
-        }
-
-    }, [props])
-
-    useEffect(() => {
-        console.log(list)
-    }, [list])
-
-    useEffect(() => {
-        console.log(newItemDescription)
-    })
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
+
+            <Button title="Voltar" onPress={() => onActionDone(props.list)} />
 
             <ScrollView style={{ flex: 1 }}>
                 <TextInput
@@ -95,7 +105,7 @@ export default function List(props) {
                     </TouchableHighlight>
 
                     <TextInput
-                        style={{ borderColor: 'gray', borderWidth: 1, padding: 5 }}
+                        style={{ flex: 1, borderColor: 'gray', borderWidth: 1, padding: 5 }}
                         placeholder='Descrição'
                         onChangeText={(text) => updateList('description', text)}
                         value={list.description}
@@ -121,6 +131,7 @@ export default function List(props) {
                 />
             </ScrollView>
 
+            <Button title="Salvar" onPress={() => onActionDone(list)} />
         </SafeAreaView>
     );
 }

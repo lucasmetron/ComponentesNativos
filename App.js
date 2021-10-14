@@ -17,23 +17,39 @@ import List from './app/Components/List';
 
 const App = () => {
 
-  const [lists, setLists] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [modalVisible, setModalVisible] = useState(false)
+  const [lists, setLists] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedList, setSelectedList] = useState({});
 
   async function getLists() {
-    setIsLoading(true)
-    const listsFromBD = await ListsService.list()
-    setIsLoading(false)
-    setLists(listsFromBD)
+    setIsLoading(true);
+    const listsFromBD = await ListsService.list();
+    setIsLoading(false);
+    setLists(listsFromBD);
   }
 
-  function createList() {
-    //parei no minuto 07:30
+  async function createList() {
+    const newList = await ListsService.create({ title: 'Nova Lista', description: '', picture: '', items: [] })
+    let newLists = [...lists, newList]
+    await setLists(newLists)
+    selectList(newList)
   }
 
-  function selectList() {
-    return ''
+  function selectList(list) {
+    setSelectedList(list)
+    setModalVisible(true)
+  }
+
+  function updateList(newList) {
+    const upLists = [...lists]
+    const listIndex = upLists.findIndex(list => list.id === newList.id);
+    upLists[listIndex] = newList;
+    setLists(upLists)
+    setSelectedList({})
+    setModalVisible(false)
+
+    ListsService.update(upLists[listIndex]);
   }
 
   function removeList(listToRemove) {
@@ -50,9 +66,6 @@ const App = () => {
     getLists()
   }, [])
 
-
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
   return (
     <SafeAreaView>
       <View>
@@ -67,7 +80,7 @@ const App = () => {
           transparent={false}
           visible={modalVisible}
         >
-          <List />
+          <List list={selectedList} onActionDone={updateList} />
         </Modal>
 
       </View>
