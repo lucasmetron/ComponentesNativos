@@ -29,24 +29,11 @@ export default function List(props) {
 
     }, [props])
 
-    useEffect(() => {
-        console.log(list)
-    }, [list])
-
-    useEffect(() => {
-        console.log(newItemDescription)
-    })
-
-    function onActionDone(list) {
-        if (props.onActionDone) {
-            props.onActionDone(list)
-        }
-    }
-
     function updateList(field, value) {
         const newList = Object.assign({}, list, { [field]: value })
         setList(newList)
     }
+
 
     function updateListItem(item) {
         const itemIndex = list.items.findIndex(listItem => listItem.id === item.id)
@@ -74,20 +61,12 @@ export default function List(props) {
         }
     }
 
-    function createListItem() {
-        const description = newItemDescription
-        if (description) {
-            const newItem = { description: description, done: false, id: Date.now().toString() }
-            updateListItem(newItem);
-            setNewItemDescription('');
-        }
-    }
 
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
 
-            <Button title="Voltar" onPress={() => onActionDone(props.list)} />
+            <Button title="Voltar" onPress={() => props.onActionDone(props.list)} />
 
             <ScrollView style={{ flex: 1 }}>
                 <TextInput
@@ -131,7 +110,7 @@ export default function List(props) {
                 />
             </ScrollView>
 
-            <Button title="Salvar" onPress={() => onActionDone(list)} />
+            <Button title="Salvar" onPress={() => props.onActionDone(list)} />
         </SafeAreaView>
     );
 }

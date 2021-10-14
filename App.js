@@ -22,6 +22,10 @@ const App = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedList, setSelectedList] = useState({});
 
+  useEffect(() => {
+    getLists()
+  }, [])
+
   async function getLists() {
     setIsLoading(true);
     const listsFromBD = await ListsService.list();
@@ -29,16 +33,16 @@ const App = () => {
     setLists(listsFromBD);
   }
 
+  function selectList(list) {
+    setSelectedList(list)
+    setModalVisible(true)
+  }
+
   async function createList() {
     const newList = await ListsService.create({ title: 'Nova Lista', description: '', picture: '', items: [] })
     let newLists = [...lists, newList]
     await setLists(newLists)
     selectList(newList)
-  }
-
-  function selectList(list) {
-    setSelectedList(list)
-    setModalVisible(true)
   }
 
   function updateList(newList) {
@@ -58,13 +62,7 @@ const App = () => {
     ListsService.remove(listToRemove.id)
   }
 
-  useEffect(() => {
-    // console.log('lista from app', lists)
-  }, [lists])
 
-  useEffect(() => {
-    getLists()
-  }, [])
 
   return (
     <SafeAreaView>
